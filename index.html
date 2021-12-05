@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Jeux</title>
+    </head>
+    <body>
+		<script type="text/javascript">
+			document.addEventListener("keydown", keySpace, false);
+
+			var konami=["ArrowUp","ArrowUp","ArrowDown","ArrowDown","ArrowLeft","ArrowRight","ArrowLeft","ArrowRight","b","a"];
+			var cKonami=0;
+
+			function keySpace(e) {
+			    if(e.key == konami[cKonami]) {
+			        cKonami++;
+			    }else{
+					cKonami=0;
+			    }
+			    if (cKonami==10) {
+			    	window.location.href = "jeux.html";
+			    }
+			}
+		</script>
+    </body>
+</html>
