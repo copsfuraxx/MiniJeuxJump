@@ -34,12 +34,13 @@ document.addEventListener("keydown", keySpace, false);
 start();
 
 function keySpace(e) {
+	if (e.key == " " || e.key== "ArrowUp" || e.key=="ArrowDown") {
+		e.preventDefault();
+	}
 	if (!etatJeu) return;
     if((e.key == " " || e.key== "ArrowUp") && etat==0) {
-    	e.preventDefault();
         etat=1;
     }else if(e.key=="ArrowDown" && bouer==0 && couldownBouer==0){
-	e.preventDefault();
     	bouer=1;
     }else if(e.key=="Escape"){
     	clearInterval(run);
