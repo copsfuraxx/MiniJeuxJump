@@ -39,6 +39,7 @@ function keySpace(e) {
     	e.preventDefault();
         etat=1;
     }else if(e.key=="ArrowDown" && bouer==0 && couldownBouer==0){
+	e.preventDefault();
     	bouer=1;
     }else if(e.key=="Escape"){
     	clearInterval(run);
