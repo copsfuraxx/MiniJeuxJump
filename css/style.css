@@ -23,6 +23,28 @@ img {
     left: 0;
     right: 0;
 }
-h1{
+
+#haut{
     text-align: center;
+}
+
+#bas{
+    padding: 0;
+    margin: auto;
+    display: block;
+    width: 800px;
+    height: 450px;
+    position: absolute;
+    top: 900px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+#bas p, #bas img{
+    width: auto;
+    height: auto;
+    position: relative;
+    display: inline;
+    
 }
