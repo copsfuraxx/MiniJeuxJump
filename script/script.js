@@ -6,9 +6,9 @@ c.height = c.offsetHeight;
 var ctx=c.getContext("2d");
 var etat;
 var position;
-var obstacleSol=[];
-var obstacleAir=[];
-var aLaMer=[];
+var obstacleSol;
+var obstacleAir;
+var aLaMer;
 var time;
 var score;
 var random;
@@ -16,6 +16,7 @@ var bouer;
 var couldownBouer;
 var couldownALaMer;
 var etatJeu=false;
+var run;
 
 var imgCaillou = new Image;
 imgCaillou.src = "image/KAYOU1.png";
@@ -34,7 +35,8 @@ start();
 
 function keySpace(e) {
 	if (!etatJeu) return;
-    if(e.key == " " && etat==0) {
+    if((e.key == " " || e.key== "ArrowUp") && etat==0) {
+    	e.preventDefault();
         etat=1;
     }else if(e.key=="ArrowDown" && bouer==0 && couldownBouer==0){
     	bouer=1;
@@ -47,6 +49,9 @@ function keySpace(e) {
 function start(){
 	etat=0;
 	position=0;
+	obstacleSol=[];
+	obstacleAir=[];
+	aLaMer=[];
 	time=0;
 	score=0;
 	random=1;
@@ -54,55 +59,56 @@ function start(){
 	couldownBouer=0;
 	couldownALaMer=100;
 	etatJeu=true;
+	clearInterval(run);
 	run=setInterval(main, 1);
 }
 
 function drawBateau() {
-	ctx.drawImage(imgBato,0,310-position);
+	ctx.drawImage(imgBato,0,318-position);
 }
 
 function drawBouer() {
-	ctx.drawImage(imgBouer,10,330-position);
+	ctx.drawImage(imgBouer,0,318-position);
 }
 
 function drawALaMer() {
 	for(let i=0;i<aLaMer.length;i++){
-		ctx.drawImage(imgALaMer,aLaMer[i],330);
+		ctx.drawImage(imgALaMer,aLaMer[i][0],318);
 	}
 }
 
 function drawObstacleSol() {
 	for(let i=0;i<obstacleSol.length;i++){
-		ctx.drawImage(imgCaillou,obstacleSol[i],330);
+		ctx.drawImage(imgCaillou,obstacleSol[i],318);
 	}
 }
 
 function drawObstacleAir() {
 	for(let i=0;i<obstacleAir.length;i++){
-		ctx.drawImage(imgMouette,obstacleAir[i],280);
+		ctx.drawImage(imgMouette,obstacleAir[i],263);
 	}
 }
 
-function physique(){
+function physique(){//25*27
 
 	for(let i=0;i<obstacleSol.length;i++){
-		if((obstacleSol[i]<=0 && obstacleSol[i]+20>=0) || (obstacleSol[i]<=40 && obstacleSol[i]+20>=40)){
+		if((obstacleSol[i]<=0 && obstacleSol[i]+20>=0) || (obstacleSol[i]<=25 && obstacleSol[i]+20>=25)){
 	    	if(position<21)clearInterval(run);
 		}
 	}
 
 	for(let i=0;i<obstacleAir.length;i++){
-		if((obstacleAir[i]<=0 && obstacleAir[i]+20>=0) || (obstacleAir[i]<=40 && obstacleAir[i]+20>=40)){
-	    	if(position>19)clearInterval(run);
+		if((obstacleAir[i]<=0 && obstacleAir[i]+20>=0) || (obstacleAir[i]<=25 && obstacleAir[i]+20>=25)){
+	    	if(position>22)clearInterval(run);
 		}
 	}		
 
 	for(let i=0;i<aLaMer.length;i++){
-		if((aLaMer[i]<=0 && aLaMer[i]+20>=0) || (aLaMer[i]<=40 && aLaMer[i]+20>=40)){
-			if(position<21){
+		if((aLaMer[i][0]<=0 && aLaMer[i][0]+20>=0) || (aLaMer[i][0]<=25 && aLaMer[i][0]+20>=25)){
+			if(aLaMer[i][1] && position<21){
 				if(bouer!=0)score+=100;
     			else score-=100;
-    			aLaMer.shift();
+    			aLaMer[i][1]=false;
 			}
 		}
 	}		
@@ -125,7 +131,7 @@ function main() {
 	couldownALaMer--;
 	if (couldownALaMer==0) {
 		if(obstacleSol.length!=0 && obstacleSol[obstacleSol.length-1]<750)aLaMer.push(950);
-		else aLaMer.push(850);
+		else aLaMer.push([850,true]);
 		couldownALaMer=parseInt(Math.random()*100+500);
 	}
 	if (etat==1 && position<50) {
@@ -147,22 +153,23 @@ function main() {
 	}
 	for(let i=0;i<obstacleSol.length;i++){
 		if (obstacleSol[i]<-49) {
-			obstacleSol.slice(i,1);
+			obstacleSol.slice(i,i+1);
 		}else{
 			obstacleSol[i]--;
 		}
 	}
 	for(let i=0;i<obstacleAir.length;i++){
 		if (obstacleAir[i]<-49) {
-			obstacleAir.slice(i,1);
+			obstacleAir.slice(i,i+1);
 		}else{
 			obstacleAir[i]--;
 		}
 	}
 	for(let i=0;i<aLaMer.length;i++){
-		if (aLaMer[i]<-49) {
+		if (aLaMer[i][0]<-49) {
+			aLaMer.slice(i,i+1);
 		}else{
-			aLaMer[i]--;
+			aLaMer[i][0]--;
 		}
 	}
 	physique();
