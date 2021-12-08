@@ -35,9 +35,12 @@ var sauve;
 var ignore;
 var rate;
 
-var estMobile;
-
-document.addEventListener("keydown", keySpace, false);
+var estMobile = window.matchMedia("(max-width: 760px)");
+console.log(estMobile);
+if (estMobile.matches)
+	document.addEventListener("touchstart", click, false);
+else
+	document.addEventListener("keydown", keySpace, false);
 
 start();
 
@@ -80,14 +83,6 @@ function start(){
 	sauve=0;
 	ignore=0;
 	rate=0;
-
-	estMobile = window.matchMedia("(max-width: 760px)");
-	if (estMobile.matches){
-		document.getElementById("dessin").ontouchend=click;
-	}else{
-		document.getElementById("dessin").ontouchend=null;
-	}
-	console.log(estMobile);
 
 	etatJeu=true;
 	clearInterval(run);
