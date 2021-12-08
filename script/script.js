@@ -35,7 +35,7 @@ var sauve;
 var ignore;
 var rate;
 
-var estMobile = document.getElementById("mobile").style.display=="none";
+var estMobile = window.matchMedia("(max-width: 720px)").matches;
 console.log(estMobile);
 if (estMobile)
 	document.addEventListener("touchstart", click, false);
