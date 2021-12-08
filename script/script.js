@@ -35,17 +35,17 @@ var sauve;
 var ignore;
 var rate;
 
-var estMobile = window.matchMedia("(max-width: 720px)").matches;
-console.log(estMobile);
-if (estMobile)
-	document.addEventListener("touchstart", click, false);
-else
-	document.addEventListener("keydown", keySpace, false);
+var estMobile=false;
+
+document.addEventListener("touchstart", click, false);
+
+document.addEventListener("keydown", keySpace, false);
 
 start();
 
 function click(e) {
-	e.preventDefault();
+	//e.preventDefault();
+	if(!estMobile)estMobile=true;
 	if (!etatJeu) return;
     if(etat==0) {
         etat=1;
@@ -136,7 +136,7 @@ function physique(){//25*27
 					score+=100;
 					sauve++;
 					aLaMer.splice(i,1);
-					if(!estMobile)bouer=1;
+					if(estMobile)bouer=1;
 				}
     			else{
     				score-=100;
