@@ -35,9 +35,21 @@ var sauve;
 var ignore;
 var rate;
 
+var estMobile = window.matchMedia("only screen and (max-width: 760px)");
+if (!estMobile.matches){
+	document.getElementById("dessin").addEventListener("click", click, false);
+}
+
 document.addEventListener("keydown", keySpace, false);
 
 start();
+
+function click(e) {
+	if (!etatJeu) return;
+    if(etat==0) {
+        etat=1;
+    }
+}
 
 function keySpace(e) {
 	if (e.key == " " || e.key== "ArrowUp" || e.key=="ArrowDown") {
@@ -119,10 +131,11 @@ function physique(){//25*27
 	for(let i=0;i<aLaMer.length;i++){
 		if((aLaMer[i][0]<=0 && aLaMer[i][0]+20>=0) || (aLaMer[i][0]<=25 && aLaMer[i][0]+20>=25)){
 			if(aLaMer[i][1] && position<21){
-				if(bouer!=0){
+				if(bouer!=0 || !estMobile.matches){
 					score+=100;
 					sauve++;
 					aLaMer.splice(i,1);
+					if(!estMobile.matches)bouer=1;
 				}
     			else{
     				score-=100;
