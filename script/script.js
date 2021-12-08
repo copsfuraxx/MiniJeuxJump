@@ -35,9 +35,9 @@ var sauve;
 var ignore;
 var rate;
 
-var estMobile = window.matchMedia("(max-width: 760px)");
+var estMobile = document.getElementById("mobile").style.display=="none";
 console.log(estMobile);
-if (estMobile.matches)
+if (estMobile)
 	document.addEventListener("touchstart", click, false);
 else
 	document.addEventListener("keydown", keySpace, false);
@@ -132,11 +132,11 @@ function physique(){//25*27
 	for(let i=0;i<aLaMer.length;i++){
 		if((aLaMer[i][0]<=0 && aLaMer[i][0]+20>=0) || (aLaMer[i][0]<=25 && aLaMer[i][0]+20>=25)){
 			if(aLaMer[i][1] && position<21){
-				if(bouer!=0 || estMobile.matches){
+				if(bouer!=0 || estMobile){
 					score+=100;
 					sauve++;
 					aLaMer.splice(i,1);
-					if(!estMobile.matches)bouer=1;
+					if(!estMobile)bouer=1;
 				}
     			else{
     				score-=100;

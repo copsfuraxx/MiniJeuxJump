@@ -48,3 +48,8 @@ img {
     display: inline;
     
 }
+
+@media only screen and (max: 760px)
+{
+#mobile { display: none; }
+}
