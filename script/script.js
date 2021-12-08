@@ -37,7 +37,7 @@ var rate;
 
 var estMobile = window.matchMedia("only screen and (max-width: 760px)");
 if (!estMobile.matches){
-	document.getElementById("dessin").addEventListener("click", click, false);
+	document.getElementById("dessin").ontouchend=click;
 }
 
 document.addEventListener("keydown", keySpace, false);
@@ -45,6 +45,7 @@ document.addEventListener("keydown", keySpace, false);
 start();
 
 function click(e) {
+	e.preventDefault();
 	if (!etatJeu) return;
     if(etat==0) {
         etat=1;
